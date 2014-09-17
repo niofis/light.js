@@ -4,6 +4,7 @@ var Camera = (function () {
         var self = this;
 
         self.left_top = {
+                
         };
         self.right_top = {};
         self.left_bottom = {};
