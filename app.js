@@ -1,11 +1,14 @@
 var fs = require('fs');
 var os = require('os');
-var ppm = require('ppm');
 var Light = require('./index');
 
 var light = new Light();
-console.log('rendering demo world');
+console.log('Rendering Demo World');
+var t1 = process.hrtime();
 light.render();
+var elapsed = process.hrtime(t1);
+console.log('Done in %d seconds', elapsed[0] + elapsed[1]/1e9);
+console.log('Saving image...');
 saveImage();
 
 
@@ -35,5 +38,5 @@ function saveImage () {
     }
 
    fs.writeFileSync('image.ppm',str);
-   console.log('saving image, done');
+   console.log('Done');
 }
