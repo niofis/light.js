@@ -1,21 +1,23 @@
 var fs = require('fs');
 var os = require('os');
-var Png = require('png').Png;
 var Buffer = require('buffer').Buffer;
-var Light = require('./index');
+var Light = require('../index');
 
 var light = new Light();
 console.log('Rendering Demo World');
 var t1 = process.hrtime();
+
 light.render();
 var elapsed = process.hrtime(t1);
 console.log('Done in %d seconds', elapsed[0] + elapsed[1]/1e9);
 console.log('Saving image...');
-savePng();
-//savePpm();
+savePpm();
+//savePng();
+
 
 
 function savePng() {
+    var Png = require('png').Png;
     var height = light.job.image_height;
     var width = light.job.image_width;
     var buffer = light.job.buffer;
