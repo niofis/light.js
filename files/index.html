@@ -13,6 +13,7 @@
 
 <script>
   'use strict';
+  var restart = false;
   var socket = io();
   /*
   socket.on('news', function (data) {
@@ -20,11 +21,14 @@
     socket.emit('my other event', { my: 'data' });
   });
   */
+  socket.on('connect', () => {
+    if (restart) {
+      location.reload();
+      restart = false;
+    }
+  });
   socket.on('disconnect', () => {
-      console.log('disconnect!');
-      setTimeout(() => {
-        location.reload();  
-      },300);
+    restart = true;
   });
 </script>
 
