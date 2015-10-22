@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Light.js</title>
+<script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+<h1>Blah!</h1>
+
+</body>
+
+<script>
+  'use strict';
+  var socket = io();
+  /*
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+  */
+  socket.on('disconnect', () => {
+      console.log('disconnect!');
+      setTimeout(() => {
+        location.reload();  
+      },300);
+  });
+</script>
+
+</html>
