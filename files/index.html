@@ -9,8 +9,6 @@
   <canvas id="screen" width="640" height="480"></canvas>
 </body>
 
-<script src="light.js"></script>
-
 <script>
   'use strict';
   var restart = false;
@@ -19,6 +17,11 @@
     if (restart) {
       location.reload();
       restart = false;
+    } else {
+      console.log('rendering...');
+      socket.emit('render', (result) => {
+        console.log('Done rendering');
+      });
     }
   });
   socket.on('disconnect', () => {

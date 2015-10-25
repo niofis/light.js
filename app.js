@@ -2,7 +2,7 @@
 
 var express = require('express');
 var app = express();
-
+var Light = require('./light');
 
 app.use(express.static('files'));
 
@@ -14,11 +14,11 @@ var server = app.listen(port, () => {
 
 var io = require('socket.io')(server);
 io.on('connection', (socket) => {
-  /*
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-  */
  console.log('client connected!');
+ socket.on('render', (callback) => {
+   var light = new Light();
+   light.render(callback);
+ });
 });
+
+
