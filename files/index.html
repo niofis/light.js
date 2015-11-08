@@ -3,36 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <title>Light.js</title>
+<script src="pixi.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+  <!--
   <canvas id="screen" width="640" height="480"></canvas>
+  -->
 </body>
 
 <script>
   'use strict';
+  var renderer = new PIXI.autoDetectRenderer(640,480);
+  //var renderer = new PIXI.WebGLRenderer(640,480);
+  var graphics = new PIXI.Graphics();
+  var stage = new PIXI.Container();
   var restart = false;
   var socket = io();
+  
+  document.body.appendChild(renderer.view);
+  stage.addChild(graphics);
+
   socket.on('connect', () => {
     if (restart) {
       location.reload();
       restart = false;
     } else {
-      console.log('rendering...');
       socket.emit('render', (result) => {
-        console.log('Done rendering');
+        result.forEach((line, y)=>{
+          line.forEach((color, x)=> {
+              graphics.lineStyle(1,color,255);
+              graphics.drawRect(x,y,1,1);
+            });
+          });
+        renderer.render(stage);
       });
     }
   });
   socket.on('disconnect', () => {
     restart = true;
   });
-  (()=> {
-    var screen = document.getElementById('screen');
-    var ctx = screen.getContext('2d');
-    ctx.fillStyle = "0";
-    ctx.fillRect(0,0,screen.width, screen.height);
-  })();
 </script>
 
 </html>
